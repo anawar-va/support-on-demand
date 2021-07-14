@@ -1,0 +1,52 @@
+SELECT
+  a.assignee,
+  COUNT(a.ticket_id) AS num_tickets,
+  TIMESTAMP_TRUNC(a.updated, MONTH) AS months,
+  t.email,
+  t.first_name,
+  t.last_name
+FROM
+  `product-marketing.brayden.zendesk_tickets_all` a
+LEFT JOIN
+  `repcore-prod.vstore_production_identity_access.vstore_pc_users` AS t
+ON
+  a.assignee = t.email
+
+WHERE
+  a.updated > "2020-12-31"
+  AND a.assignee IN ('aamadi@vendasta.com',
+    'benyates@vendasta.com',
+    'emolokwu@vendasta.com',
+    'oiyalla@vendasta.com',
+    'lkhayampour@vendasta.com',
+    'kogresko@vendasta.com',
+    'aisrani@vendasta.com',
+    'radara@vendasta.com',
+    'vgianchandani@vendasta.com',
+    'tadewolu@vendasta.com',
+    'highceem@vendasta.com',
+    'venicea@vendasta.com',
+    'tjy@vendasta.com',
+    'mmamon@vendasta.com',
+    'ppalaganas@vendasta.com',
+    'kguinto@vendasta.com',
+    'anthonyr@vendasta.com',
+    'jbaluyut@vendasta.com',
+    'todelola@vendasta.com',
+    'acrane@vendasta.com',
+    'cschnurr@vendasta.com',
+    'scollantes@vendasta.com',
+    'smascarin@vendasta.com',
+    'bfehr@vendasta.com',
+    'bager@vendasta.com',
+    'lsimpson@vendasta.com',
+    'anawar@vendasta.com')
+
+GROUP BY
+  a.assignee,
+  months, t.email, t.first_name,
+  t.last_name
+  
+  ORDER BY a.assignee,
+  t.email, t.first_name,
+  t.last_name, months
